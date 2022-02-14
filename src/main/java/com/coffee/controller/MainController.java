@@ -1,17 +1,21 @@
 package com.coffee.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.coffee.vo.CoffeeVO;
+import com.coffee.service.OrderService;
+import com.coffee.vo.Order;
 
 @Controller
 public class MainController {
 	
-	private CoffeeVO coffeeVO ;
+	private Order order ;
 	
+	@Autowired
+	private OrderService historyService;
 //	@RequestMapping("/order")
 //	@ResponseBody
 //	public String order(@RequestParam String item, @RequestParam int cnt) {
@@ -20,21 +24,14 @@ public class MainController {
 //	}
 	
 	@RequestMapping("/success")
-	public String success(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount, Model model) {
+	public String success(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount, Model model) {
 		
-		coffeeVO = new CoffeeVO();
+		order = new Order();
 		
-		coffeeVO.setCost(amount);
-		coffeeVO.setOrderId(orderId);
+		order.setCost(amount);
+		order.setOrderId(orderId);
 		
-		System.out.println(coffeeVO.getCost());
-		System.out.println(coffeeVO.getOrderId());
-		
-		model.addAttribute("orderId", orderId);
-		model.addAttribute("cost", amount);
-		
-		System.out.println(model);
-		
+		historyService.historyInsert(order);
 		
 		return "success.html";
 	}
