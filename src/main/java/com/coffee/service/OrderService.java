@@ -39,6 +39,8 @@ public class OrderService {
 		
 		List<Order> history = orderRepository.findAll();
 		
+		log.info("### Select Count : " + history.size());
+		
 		for(Order i : history) {
 			log.info("### Cost : " + i.getCost());
 			log.info("### OrderId : " + i.getOrderid());
