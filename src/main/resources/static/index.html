@@ -9,17 +9,19 @@
 	<p>Coffee Order System</p>
 	<img src="/img/Americano.jpg" width="100px"/>
 	<p>4500원</p>
-	<!--<form name="order"method="POST" action="/order">
-		<div>아이스 아메리카노<input name="cnt" placeholder="갯수 입력"/></div>
-		<button type="submit" id="payment-button">결제하기</button>
-	</form>
-	-->
 	<section>
-		<div>아이스 아메리카노<input id="itemcnt" name="cnt" placeholder="갯수 입력"/></div>
-		<button type="submit" id="payment-button">결제하기</button>
+		<div>
+			<input id="menu" name="menu" placeholder="메뉴 입력">
+			<input id="itemcnt" name="cnt" placeholder="갯수 입력"/>
+			<button type="submit" id="payment-button">결제하기</button>
+		</div>
 	</section>
+	<form method="GET" action="/search">
+		<button type="submit" id="search-history">내역 조회</button> 
+	</form>
 	<script src="https://js.tosspayments.com/v1"></script>
 	<script>
+	
 	    var tossPayments = TossPayments("test_ck_JQbgMGZzorzzXdypGB7rl5E1em4d");
 	    var button = document.getElementById("payment-button");
 	    
@@ -29,13 +31,14 @@
 		
 			var cnt = document.getElementById("itemcnt").value;
 			var cost = parseInt(cnt)*4500;
+		    var menu = document.getElementById("menu").value;
 			
 	        var method = "가상계좌"; // "카드" 혹은 "가상계좌"
 	
 	        var paymentData = {
 	            amount: cost,
 	            orderId: orderId,
-	            orderName: "아이스 아메리카노",
+	            orderName: menu,
 	            customerName: "이 준",
 	            successUrl: window.location.origin + "/success",
 	            failUrl: window.location.origin + "/fail",
