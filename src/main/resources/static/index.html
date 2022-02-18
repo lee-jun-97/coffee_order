@@ -5,20 +5,24 @@
 	<meta charset="utf-8"/>
 </head>
 <body>
-	<h1>Menu</h1>
-	<p>Coffee Order System</p>
-	<img src="/img/Americano.jpg" width="100px"/>
-	<p>4500원</p>
-	<section>
+	<h1 align="center">Menu</h1>
+	<h2 align="center">Coffee Order System</h2>
+	<div align="center">
+		<img src="/img/Americano.jpg" width="100px"/>
+		<p>4500원</p>
+	</div>
+	<section align="center">
 		<div>
-			<input id="menu" name="menu" placeholder="메뉴 입력">
+			<input id="menu" name="menu" placeholder="메뉴 입력"/>
 			<input id="itemcnt" name="cnt" placeholder="갯수 입력"/>
-			<button type="submit" id="payment-button">결제하기</button>
 		</div>
 	</section>
-	<form method="GET" action="/search">
-		<button type="submit" id="search-history">내역 조회</button> 
-	</form>
+	<div>
+		<p align="center"><button type="submit" id="payment-button">결제하기</button></p>
+		<form method="GET" action="/search" align="center">
+			<button type="submit" id="search-history">내역 조회</button> 
+		</form>
+	</div>
 	<script src="https://js.tosspayments.com/v1"></script>
 	<script>
 	
