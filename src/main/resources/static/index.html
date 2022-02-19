@@ -7,14 +7,33 @@
 <body>
 	<h1 align="center">Menu</h1>
 	<h2 align="center">Coffee Order System</h2>
-	<div align="center">
-		<img src="/img/Americano.jpg" width="100px"/>
-		<p>4500원</p>
-	</div>
+	<!-- table 내에서의 value를 쓸 때는 data-value attribute 써야 하는 것 같음 -->
+	<table border="1" align="center">
+		<thead>
+			<th>아메리카노</th>
+			<th>카페 라떼</th>
+		</thead>
+		<tbody>
+			<tr>
+				<!-- value attribute 쓰면 value 값 못 가져옴 data-value 써야 함 -->
+				<!-- 이미지 클릭 시 아래 텍스트 박스에 메뉴 이름과 가격 채워지도록 구현함 -->
+				<th><img src="/img/Americano.jpg" width="100px" onclick="coffee_select(this)" data-value="Americano"/></a></th>
+				<th><img src="/img/Latte.jpg" width="100px" onclick="coffee_select(this)" data-value="Latte"/></a></th>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<!-- value attribute 쓰면 value 값 못 가져옴 data-value 써야 함 -->
+				<th id="Americano" data-value="4500">4500원</th>
+				<th id="Latte" data-value="4500">4500원</th>
+			</tr>
+		</tfoot>
+	</table>
 	<section align="center">
 		<div>
-			<input id="menu" name="menu" placeholder="메뉴 입력"/>
-			<input id="itemcnt" name="cnt" placeholder="갯수 입력"/>
+			<input id="menu" name="menu" width="50px"/>
+			<input id="cost" name="cost" width="50px"/>
+			<input id="itemcnt" name="cnt" width="100px" placeholder="갯수 입력"/>
 		</div>
 	</section>
 	<div>
@@ -31,10 +50,12 @@
 	    
 	    var orderId = new Date().getTime();
 	
+		// 결제하기 버튼 클릭 시 토스 테스트 결제 화면 함수
 	    button.addEventListener("click", function () {
 		
 			var cnt = document.getElementById("itemcnt").value;
-			var cost = parseInt(cnt)*4500;
+			var coffee_cost = document.getElementById("cost").value;
+			var cost = parseInt(cnt)*parseInt(coffee_cost);
 		    var menu = document.getElementById("menu").value;
 			
 	        var method = "가상계좌"; // "카드" 혹은 "가상계좌"
@@ -50,5 +71,14 @@
 	
 	        tossPayments.requestPayment(method, paymentData);
 	    });
+	    
+	    // 이미지 클릭 시 실행되는 함수 
+	    function coffee_select(inputValue) {
+		
+		// data-value attribute 쓴 태그 value 가져올 때는 dataset.value로 값 가져와야 함.
+		document.getElementById("menu").value = inputValue.dataset.value;
+		document.getElementById("cost").value = document.getElementById(inputValue.dataset.value).dataset.value;		
+	}
+	    
 	</script>
 </body>
