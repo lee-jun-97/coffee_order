@@ -33,10 +33,11 @@ public class OrderService {
 		
 	}
 	
-	public void historySelect() {
+	public List<Order> historySelectAll() {
 		
 		log.info("### history Select Start");
 		
+		// 결제 내역 모두 Select 함.
 		List<Order> history = orderRepository.findAll();
 		
 		log.info("### Select Count : " + history.size());
@@ -48,6 +49,21 @@ public class OrderService {
 		
 		log.info("### history Select End");
 		
+		return history;		
 	}
+	
+//	public List<Order> historySelectDate(String order_date) {
+//		
+//		log.info("### history select By Date Start");
+//		
+//		List<Order> historyDate = orderRepository.findByDate(order_date);
+//		
+//		for(Order i : historyDate) {
+//			log.info("### Cost : " + i.getCost());
+//			log.info("### OrderId : " + i.getOrderid());
+//		}
+//		
+//		return historyDate;
+//	}
 
 }

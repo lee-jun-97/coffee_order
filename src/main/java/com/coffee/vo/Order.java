@@ -15,5 +15,6 @@ public class Order {
 	public int cost;
 	@Id
 	public String orderid;
+	public String order_date;
 
 }

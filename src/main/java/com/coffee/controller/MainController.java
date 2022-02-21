@@ -1,10 +1,13 @@
 package com.coffee.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,19 +20,33 @@ public class MainController {
 	
 	private Order order ;
 	
-	private Logger log = LoggerFactory.getLogger(MainController.class);
+	private static final Logger log = LoggerFactory.getLogger(MainController.class);
 	
 	@Autowired
 	private OrderService orderService;
 	
+	@RequestMapping("/")
+	public String home() {
+		return "index.html";
+	}
+	
+	@RequestMapping("/order")
+	public String order() {
+		return "order.html";
+	}
+	
 	@RequestMapping("/success")
 	@ResponseBody
-	public String success(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount, Model model) {
+	public String success(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount) {
 		
 		order = new Order();
 		
+		Date order_date = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		
 		order.setCost(amount);
 		order.setOrderid(orderId);
+		order.setOrder_date(df.format(order_date));
 		
 		try {
 			orderService.historyInsert(order);
@@ -42,16 +59,33 @@ public class MainController {
 	}
 	
 	@RequestMapping("/search")
-	@ResponseBody
 	public String search() {
 		
-		try {
-			orderService.historySelect();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			orderService.historySelectAll();
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
 		
-		return "search success";		
+		return "search.html";		
+	}
+	
+	@RequestMapping("/searchhistory")
+	@ResponseBody
+	public String searchHistory(@RequestParam(defaultValue = "null") String order_date) {
+		
+		System.out.println(order_date);
+		
+		if(order_date.equals("null")) {
+			List<Order> historyList = orderService.historySelectAll();
+			return historyList.toString();
+		}
+//			else {
+//			List<Order> historyList = orderService.historySelectDate(order_date);
+//			log.info(historyList.get(0).toString());
+//		}
+		
+		return order_date;
 	}
 
 }
