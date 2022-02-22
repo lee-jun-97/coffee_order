@@ -61,12 +61,6 @@ public class MainController {
 	@RequestMapping("/search")
 	public String search() {
 		
-//		try {
-//			orderService.historySelectAll();
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-		
 		return "search.html";		
 	}
 	
@@ -79,13 +73,10 @@ public class MainController {
 		if(order_date.equals("null")) {
 			List<Order> historyList = orderService.historySelectAll();
 			return historyList.toString();
+		} else {
+			List<Order> historyList = orderService.historySelectDate(order_date);
+			return historyList.toString();
 		}
-//			else {
-//			List<Order> historyList = orderService.historySelectDate(order_date);
-//			log.info(historyList.get(0).toString());
-//		}
-		
-		return order_date;
 	}
 
 }

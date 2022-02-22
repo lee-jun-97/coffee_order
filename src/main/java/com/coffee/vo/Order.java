@@ -12,7 +12,7 @@ import lombok.Setter;
 @Table(name="payment_history")
 public class Order {
 	
-	public int cost;
+	public double cost;
 	@Id
 	public String orderid;
 	public String order_date;

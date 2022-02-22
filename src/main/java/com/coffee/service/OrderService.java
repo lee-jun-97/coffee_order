@@ -52,18 +52,19 @@ public class OrderService {
 		return history;		
 	}
 	
-//	public List<Order> historySelectDate(String order_date) {
-//		
-//		log.info("### history select By Date Start");
-//		
-//		List<Order> historyDate = orderRepository.findByDate(order_date);
-//		
-//		for(Order i : historyDate) {
-//			log.info("### Cost : " + i.getCost());
-//			log.info("### OrderId : " + i.getOrderid());
-//		}
-//		
-//		return historyDate;
-//	}
+	public List<Order> historySelectDate(String order_date) {
+		
+		log.info("### history select By Date Start");
+		
+		List<Order> historyDate = orderRepository.findByOrder_Date(order_date);
+		
+		for(Order i : historyDate) {
+			log.info("### Cost : " + i.getCost());
+			log.info("### OrderId : " + i.getOrderid());
+			log.info("### Order_Date : " + i.getOrder_date());
+		}
+		
+		return historyDate;
+	}
 
 }
