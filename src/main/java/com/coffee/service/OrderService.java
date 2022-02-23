@@ -18,6 +18,7 @@ public class OrderService {
 	
 	private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 	
+	// 결제 내역 DB 저장
 	public void historyInsert(Order order) {
 		
 		log.info("### history Insert Start");
@@ -40,11 +41,11 @@ public class OrderService {
 		// 결제 내역 모두 Select 함.
 		List<Order> history = orderRepository.findAll();
 		
-		log.info("### Select Count : " + history.size());
-		
+		// Select 한 List for each 문으로 값 확인 로그
 		for(Order i : history) {
 			log.info("### Cost : " + i.getCost());
 			log.info("### OrderId : " + i.getOrderid());
+			log.info("### Order_Date : " + i.getOrder_date());
 		}
 		
 		log.info("### history Select End");
@@ -56,8 +57,10 @@ public class OrderService {
 		
 		log.info("### history select By Date Start");
 		
+		// CustromRepository에서 만든 findByOrder_Date method 사용하여 DB Select
 		List<Order> historyDate = orderRepository.findByOrder_Date(order_date);
 		
+		// Select 한 List for each 문으로 값 확인 로그
 		for(Order i : historyDate) {
 			log.info("### Cost : " + i.getCost());
 			log.info("### OrderId : " + i.getOrderid());

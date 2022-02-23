@@ -18,22 +18,16 @@ public class CustomRepositoryImpl implements CustomRepository {
 	EntityManager entityManager;
 
 	@Override
+	// CusmtomRepository 에서 추상화 한 method Override 하여 직접 구현함.
 	public List<Order> findByOrder_Date(String order_date) {
-		// TODO Auto-generated method stub
+		// 주문 일자를 조건으로 하는 Query문 생성
 		List<Order> resultList = 
 				entityManager.createQuery("SELECT A FROM Order A WHERE A.order_date=:order_date", Order.class)
+				// :xx 로 Parameter 명시한 값에 Parameter Setting
 				.setParameter("order_date", order_date)
+				// Query 결과값 List로 가져옴.
 				.getResultList();
 			return resultList;
 	}
-	
-//	@Override
-//	public List<Order> findByOrder_Date(String order_date) {
-//		
-//		List<Order> resultList = entityManager.createQuery("SELECT A FROM Order A WHERE A.order_date=order_date", Order.class).getResultList();
-//		List<Order> resultList = entityManager.createQuery("SELECT A FROM Order A WHERE A.order_date="+order_date, Order.class).getResultList();
-//		
-//		return resultList;
-//	}
 
 }

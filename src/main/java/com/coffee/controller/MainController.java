@@ -18,7 +18,8 @@ import com.coffee.vo.Order;
 @Controller
 public class MainController {
 	
-	private Order order ;
+	@Autowired
+	Order order ;
 	
 	private static final Logger log = LoggerFactory.getLogger(MainController.class);
 	
@@ -39,16 +40,17 @@ public class MainController {
 	@ResponseBody
 	public String success(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount) {
 		
-		order = new Order();
-		
+		// 주문 일자 생성
 		Date order_date = new Date();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		
+		// order 객체에 데이터 저장
 		order.setCost(amount);
 		order.setOrderid(orderId);
 		order.setOrder_date(df.format(order_date));
 		
 		try {
+			// DB Insert
 			orderService.historyInsert(order);
 		} catch (Exception e) {
 			log.warn("### History Insert Fail");
@@ -66,14 +68,18 @@ public class MainController {
 	
 	@RequestMapping("/searchhistory")
 	@ResponseBody
-	public String searchHistory(@RequestParam(defaultValue = "null") String order_date) {
+	public String searchHistory(@RequestParam String order_date) {
 		
 		System.out.println(order_date);
 		
-		if(order_date.equals("null")) {
+		// 조회 일자 없을 시
+		if(order_date.isEmpty()) {
+			// 조회 일자 지정 하지 않고 조회 시 모든 내역 조회
 			List<Order> historyList = orderService.historySelectAll();
 			return historyList.toString();
+		// 조회 일자 지정 조회 시
 		} else {
+			// 지정 조회 일자 조회 
 			List<Order> historyList = orderService.historySelectDate(order_date);
 			return historyList.toString();
 		}
