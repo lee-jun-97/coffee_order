@@ -18,8 +18,7 @@ import com.coffee.vo.Order;
 @Controller
 public class MainController {
 	
-	@Autowired
-	Order order ;
+	private Order order ;
 	
 	private static final Logger log = LoggerFactory.getLogger(MainController.class);
 	
@@ -39,6 +38,8 @@ public class MainController {
 	@RequestMapping("/success")
 	@ResponseBody
 	public String success(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam int amount) {
+		
+		order = new Order();
 		
 		// 주문 일자 생성
 		Date order_date = new Date();
